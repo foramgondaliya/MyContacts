@@ -1,20 +1,35 @@
 # mycontacts
 
-A new Flutter project.
+## Features
+## 1. Call a Contact
+Functionality: Allows the user to make a phone call directly from the app.
 
-## Getting Started
+## 2. Email a Contact
+Functionality: Allows the user to send an email to a contact.
 
-This project is a starting point for a Flutter application.
+## 3. Message a Contact
+Functionality: Allows the user to send a text message to a contact.
 
-A few resources to get you started if this is your first Flutter project:
+## 4. Share a Contact
+Functionality: Allows the user to share a contact's details with others.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 5. Edit a Contact
+Functionality: Allows the user to edit a contact's information.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 6. Edit Contact Image
+Functionality: Allows the user to change or add a contact's image.
 
+## 7. Hide/Unhide a Contact
+Functionality: Allows the user to hide or unhide contacts from the contact list.
+
+## 8. Search a Contact
+Functionality: Allows the user to search for contacts by name or other details.
+
+## 9. Change Theme (Light/Dark)
+Functionality: Allows the user to switch between light and dark themes.
+
+## 11. Alphabetical Scrolling
+Functionality: Allows the user to scroll through contacts alphabetically.
 
 
 
