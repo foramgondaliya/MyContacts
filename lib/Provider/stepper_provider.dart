@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mycontacts/Modal/contact.dart';
 import 'package:mycontacts/Provider/contact_provider.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ class StepperProvider extends ChangeNotifier {
   TextEditingController nameController = TextEditingController();
   TextEditingController contactController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  String? imagePath;
 
   void forwardStep(BuildContext context) {
     if (step == 2) {

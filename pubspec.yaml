@@ -40,6 +40,7 @@ dependencies:
   local_auth: ^2.2.0
   image_picker: ^1.1.2
   alphabet_scroll_view: ^0.3.2
+  searchable_listview: ^2.14.0
   provider:
 
 dev_dependencies:

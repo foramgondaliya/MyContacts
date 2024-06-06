@@ -30,7 +30,7 @@ class DetailPage extends StatelessWidget {
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsets.only(top: 30, left: 20, right: 20),
+                          const EdgeInsets.only(top: 30, left: 25, right: 20),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -47,7 +47,7 @@ class DetailPage extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(
-                                width: 190,
+                                width: 230,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -80,41 +80,121 @@ class DetailPage extends StatelessWidget {
                                                   text: contact.email);
 
                                           return AlertDialog(
-                                            title: Text("Edit Contact"),
-                                            content: Consumer<StepperProvider>(
-                                              builder:
-                                                  (context, provider, child) {
-                                                return Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    TextField(
-                                                      controller: provider
-                                                          .nameController,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        labelText: "Name",
-                                                      ),
-                                                    ),
-                                                    TextField(
-                                                      controller: provider
-                                                          .contactController,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        labelText: "Contact",
-                                                      ),
-                                                    ),
-                                                    TextField(
-                                                      controller: provider
-                                                          .emailController,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        labelText: "Email",
-                                                      ),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
+                                            title: const Text("Edit Contact"),
+                                            content: SizedBox(
+                                              height: 600,
+                                              width: 300,
+                                              child: Column(
+                                                children: [
+                                                  Consumer<imageProvider>(
+                                                    builder:
+                                                        (context, step, _) {
+                                                      return CircleAvatar(
+                                                          radius: 60,
+                                                          backgroundImage:
+                                                              (step.pickImagePath !=
+                                                                      null)
+                                                                  ? FileImage(
+                                                                      File(step
+                                                                          .pickImagePath!),
+                                                                    )
+                                                                  : null,
+                                                          child: IconButton(
+                                                            onPressed: () {
+                                                              showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) {
+                                                                    return AlertDialog(
+                                                                      title:
+                                                                          Text(
+                                                                        "Pick Image",
+                                                                      ),
+                                                                      content:
+                                                                          Text(
+                                                                        "Choose Image From Gallery or Camera",
+                                                                      ),
+                                                                      actions: [
+                                                                        FloatingActionButton(
+                                                                          mini:
+                                                                              true,
+                                                                          onPressed:
+                                                                              () async {
+                                                                            await Provider.of<imageProvider>(context, listen: false).pickPhoto();
+                                                                            Navigator.of(context).pop();
+                                                                          },
+                                                                          elevation:
+                                                                              3,
+                                                                          child:
+                                                                              Icon(
+                                                                            Icons.camera_alt,
+                                                                          ),
+                                                                        ),
+                                                                        FloatingActionButton(
+                                                                          mini:
+                                                                              true,
+                                                                          onPressed:
+                                                                              () async {
+                                                                            await Provider.of<imageProvider>(context, listen: false).pickImage();
+                                                                            Navigator.of(context).pop();
+                                                                          },
+                                                                          elevation:
+                                                                              3,
+                                                                          child:
+                                                                              Icon(
+                                                                            Icons.image,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    );
+                                                                  });
+                                                            },
+                                                            icon: Icon(Icons
+                                                                .camera_alt),
+                                                          ));
+                                                    },
+                                                  ),
+                                                  const SizedBox(height: 20),
+                                                  Consumer<StepperProvider>(
+                                                    builder: (context, provider,
+                                                        child) {
+                                                      return Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          TextField(
+                                                            controller: provider
+                                                                .nameController,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              labelText: "Name",
+                                                            ),
+                                                          ),
+                                                          TextField(
+                                                            controller: provider
+                                                                .contactController,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              labelText:
+                                                                  "Contact",
+                                                            ),
+                                                          ),
+                                                          TextField(
+                                                            controller: provider
+                                                                .emailController,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              labelText:
+                                                                  "Email",
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                             actions: [
                                               TextButton(
@@ -155,47 +235,30 @@ class DetailPage extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                                   ),
-                                  IconButton(
-                                    onPressed: () {
-                                      Provider.of<ContactProvider>(context,
-                                              listen: false)
-                                          .deleteContacts(contact);
-                                      Navigator.of(context)
-                                          .pushNamedAndRemoveUntil(
-                                              '/', (route) => false);
+                                  PopupMenuButton(
+                                    color: Colors.white,
+                                    itemBuilder: (context) {
+                                      return <PopupMenuEntry>[
+                                        PopupMenuItem(
+                                          onTap: () {
+                                            Provider.of<ContactProvider>(
+                                                    context,
+                                                    listen: false)
+                                                .deleteContacts(contact);
+                                            Navigator.of(context)
+                                                .pushNamedAndRemoveUntil(
+                                                    '/', (route) => false);
+                                          },
+                                          child: Text("Delete"),
+                                        ),
+                                        PopupMenuItem(
+                                          onTap: () {
+                                            // Provider.of(context)
+                                          },
+                                          child: Text("Theme"),
+                                        ),
+                                      ];
                                     },
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      size: 30,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      PopupMenuButton(
-                                        itemBuilder: (context) {
-                                          return <PopupMenuEntry>[
-                                            PopupMenuItem(
-                                              onTap: () {
-                                                // Provider.of(context)
-                                              },
-                                              child: Text("Delete"),
-                                            ),
-                                            PopupMenuItem(
-                                              onTap: () {
-                                                // Provider.of(context)
-                                              },
-                                              child: Text("Theme"),
-                                            ),
-                                          ];
-                                        },
-                                      );
-                                    },
-                                    icon: const Icon(
-                                      Icons.more_vert_outlined,
-                                      size: 30,
-                                      color: Colors.white,
-                                    ),
                                   ),
                                 ],
                               ),
@@ -207,66 +270,24 @@ class DetailPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Consumer<imageProvider>(
-                                  builder: (context, step, _) {
+                                  builder: (context, imageProvider, _) {
                                     return CircleAvatar(
-                                        radius: 70,
-                                        backgroundImage:
-                                            (step.pickImagePath != null)
-                                                ? FileImage(
-                                                    File(step.pickImagePath!),
-                                                  )
-                                                : null,
-                                        child: IconButton(
-                                          onPressed: () {
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return AlertDialog(
-                                                    title: Text(
-                                                      "Pick Image",
-                                                    ),
-                                                    content: Text(
-                                                      "Choose Image From Gallery or Camera",
-                                                    ),
-                                                    actions: [
-                                                      FloatingActionButton(
-                                                        mini: true,
-                                                        onPressed: () async {
-                                                          await Provider.of<
-                                                                      imageProvider>(
-                                                                  context,
-                                                                  listen: false)
-                                                              .pickPhoto();
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        elevation: 3,
-                                                        child: Icon(
-                                                          Icons.camera_alt,
-                                                        ),
-                                                      ),
-                                                      FloatingActionButton(
-                                                        mini: true,
-                                                        onPressed: () async {
-                                                          await Provider.of<
-                                                                      imageProvider>(
-                                                                  context,
-                                                                  listen: false)
-                                                              .pickImage();
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        elevation: 3,
-                                                        child: Icon(
-                                                          Icons.image,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  );
-                                                });
-                                          },
-                                          icon: Icon(Icons.camera_alt),
-                                        ));
+                                      radius: 70,
+                                      backgroundImage:
+                                          imageProvider.pickImagePath != null
+                                              ? FileImage(File(
+                                                  imageProvider.pickImagePath!))
+                                              : null,
+                                      child: imageProvider.pickImagePath == null
+                                          ? Text(
+                                              contact.name[0].toUpperCase(),
+                                              style: TextStyle(
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )
+                                          : null,
+                                    );
                                   },
                                 ),
                               ],
